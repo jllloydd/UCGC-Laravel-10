@@ -29,6 +29,9 @@
                     <x-nav-link :href="route('checkstatus')" :active="request()->routeIs('checkstatus')">
                         <h1 class="text-base">Appointment Status</h1>
                     </x-nav-link>
+                    <x-nav-link :href="route('chat')" :active="request()->routeIs('checkstatus')">
+                        <h1 class="text-base">Chat</h1>
+                    </x-nav-link>
                     @elseif (Auth::user()->usertype == 'superadmin')
                     <x-nav-link :href="route('superadmin/dashboard')" :active="request()->routeIs('superadmin/dashboard')">
                         <h1 class="text-base">SuperAdmin Dashboard</h1>
@@ -36,6 +39,9 @@
                     @elseif (Auth::user()->usertype == 'admin')
                     <x-nav-link :href="route('admin/dashboard')" :active="request()->routeIs('admin/dashboard')">
                         <h1 class="text-base">Admin Dashboard</h1>
+                    </x-nav-link>
+                    <x-nav-link :href="route('chat')" :active="request()->routeIs('checkstatus')">
+                        <h1 class="text-base">Chat</h1>
                     </x-nav-link>
                     @endif
                 </div>
@@ -97,6 +103,9 @@
                     <x-responsive-nav-link :href="route('checkstatus')" :active="request()->routeIs('checkstatus')">
                         <h1 class="text-base">Appointment Status</h1>
                     </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('chat')" :active="request()->routeIs('checkstatus')">
+                        <h1 class="text-base">Chat</h1>
+                    </x-responsive-nav-link>
                     @elseif (Auth::user()->usertype == 'superadmin')
                     <x-responsive-nav-link :href="route('superadmin/dashboard')" :active="request()->routeIs('superadmin/dashboard')">
                         <h1 class="text-base">SuperAdmin Dashboard</h1>
@@ -104,6 +113,9 @@
                     @elseif (Auth::user()->usertype == 'admin')
                     <x-responsive-nav-link :href="route('admin/dashboard')" :active="request()->routeIs('admin/dashboard')">
                         <h1 class="text-base">Admin Dashboard</h1>
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('chat')" :active="request()->routeIs('checkstatus')">
+                        <h1 class="text-base">Chat</h1>
                     </x-responsive-nav-link>
                     @endif
         </div>
