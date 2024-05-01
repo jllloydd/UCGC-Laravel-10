@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Events\AppointmentCreated;
 
 class UserController extends Controller
 {
@@ -25,6 +26,11 @@ class UserController extends Controller
             'time' => 'required|string|max:255',
         ]);
 
+        $data = [
+            'name' => $input['name'],
+            'course' => $input['course']
+        ];
+
         try{
             Appointment::create([
                 'name' => $input['name'],
@@ -35,10 +41,14 @@ class UserController extends Controller
                 'time' => $input['time'],
                 "user_id" => $userid
             ]);
+
+            event(new AppointmentCreated($data));
+            
         }catch(\Exception $e){
             if ($e->getCode() == 23000)
             return redirect('dashboard')->with('failed', 'You currently have an appointment reservation ongoing! Please cancel it if you want to reschedule.');
         }
+
 
             return redirect('dashboard')->with('status', 'Appointment created successfully! You may now check the status of your appointment.');
 
