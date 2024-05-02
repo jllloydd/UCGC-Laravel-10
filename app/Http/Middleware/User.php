@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Illuminate\Support\Facades\Auth;
 
-class SuperAdmin
+class User
 {
     /**
      * Handle an incoming request.
@@ -18,14 +18,13 @@ class SuperAdmin
     public function handle(Request $request, Closure $next): Response
     {
 
-        // if(Auth::user()->usertype == 'user'){
-        //     return redirect('dashboard');
-        // }
-
-        if(Auth::user()->usertype != 'superadmin'){
-            return redirect('/dashboard');
+        if(Auth::user()->usertype == 'admin'){
+            return redirect('admin/dashboard');
         }
 
+        if(Auth::user()->usertype == 'superadmin'){
+            return redirect('superadmin/dashboard');
+        }
         return $next($request);
     }
 }

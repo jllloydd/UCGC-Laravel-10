@@ -28,7 +28,7 @@
               });
               var channel = pusher.subscribe('my-channel');
               channel.bind('appointment-submitted', function(data) {
-                toastr.success('New Appointment Created!', {
+                toastr.info('New Appointment Created!', {
                     timeOut: 5000
                 });
               });

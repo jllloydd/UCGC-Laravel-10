@@ -10,7 +10,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [UserController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [UserController::class, 'index'])->middleware(['auth', 'verified', 'user'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -28,10 +28,10 @@ route::put('superadmin/update/{id}', [SuperAdminController::class, 'update'])->m
 
 route::get('superadmin/delete/{id}', [SuperAdminController::class, 'destroy'])->middleware(['auth', 'superadmin','verified'])->name('superadmin/delete');
 
-route::post('createappointment', [UserController::class, 'store'])->name('createappointment')->middleware(['auth', 'verified']);
+route::post('createappointment', [UserController::class, 'store'])->name('createappointment')->middleware(['auth', 'verified', 'user']);
 
-route::get('checkstatus', [UserController::class, 'get'])->name('checkstatus')->middleware(['auth', 'verified']);
+route::get('checkstatus', [UserController::class, 'get'])->name('checkstatus')->middleware(['auth', 'verified', 'user']);
 
 route::put('admin/update/{id}', [AdminController::class, 'update'])->name('admin/update')->middleware('admin', 'auth', 'verified');
 
-route::get('checkstatus/delete/{id}', [UserController::class, 'destroy'])->name('checkstatus/delete')->middleware(['auth', 'verified']);
+route::get('checkstatus/delete/{id}', [UserController::class, 'destroy'])->name('checkstatus/delete')->middleware(['auth', 'verified', 'user']);
