@@ -35,3 +35,5 @@ route::get('checkstatus', [UserController::class, 'get'])->name('checkstatus')->
 route::put('admin/update/{id}', [AdminController::class, 'update'])->name('admin/update')->middleware('admin', 'auth', 'verified');
 
 route::get('checkstatus/delete/{id}', [UserController::class, 'destroy'])->name('checkstatus/delete')->middleware(['auth', 'verified', 'user']);
+
+Route::get('testmail', [UserController::class, 'sendAppointmentEmail'])->name('testmail');

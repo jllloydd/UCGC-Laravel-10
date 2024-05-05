@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use App\Events\AppointmentCreated;
+use App\Mail\AppointmentEmail;
 
 class UserController extends Controller
 {
@@ -16,6 +18,10 @@ class UserController extends Controller
         $userid = Auth::user()->id;
 
         $input = $request->all();
+
+        $receiver = DB::table('users')->where('usertype', 'admin')->get();
+        $mailmessage = 'A new counseling appointment has been made!';
+        $subject= 'New Appointment Created';
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -41,6 +47,8 @@ class UserController extends Controller
                 'time' => $input['time'],
                 "user_id" => $userid
             ]);
+
+            Mail::to($receiver)->send(new AppointmentEmail($mailmessage, $subject, $receiver));
 
             event(new AppointmentCreated($data));
             
@@ -87,6 +95,16 @@ class UserController extends Controller
 
         return view('dashboard', compact('appointmentinfo'));
     }
+
+    // public function sendAppointmentEmail(){
+    //     $receiver = DB::table('users')->where('usertype', 'admin')->get();
+    //     $mailmessage = 'A new counseling appointment has been made!';
+    //     $subject= 'New Appointment Created';
+
+    //     $response = Mail::to($receiver)->send(new AppointmentEmail($mailmessage, $subject, $receiver));
+
+    //     dd($response);
+    // }
 
 
 }
