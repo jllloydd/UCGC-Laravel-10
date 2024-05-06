@@ -37,8 +37,11 @@
                         <h1 class="text-base">SuperAdmin Dashboard</h1>
                     </x-nav-link>
                     @elseif (Auth::user()->usertype == 'admin')
+                    <x-nav-link :href="route('admin/panel')" :active="request()->routeIs('admin/panel')">
+                        <h1 class="text-base">Dashboard</h1>
+                    </x-nav-link>
                     <x-nav-link :href="route('admin/dashboard')" :active="request()->routeIs('admin/dashboard')">
-                        <h1 class="text-base">Admin Dashboard</h1>
+                        <h1 class="text-base">Appointment List</h1>
                     </x-nav-link>
                     <x-nav-link :href="route('chat')" :active="request()->routeIs('chat')">
                         <h1 class="text-base">Chat</h1>
@@ -111,8 +114,11 @@
                         <h1 class="text-base">SuperAdmin Dashboard</h1>
                     </x-responsive-nav-link>
                     @elseif (Auth::user()->usertype == 'admin')
+                    <x-responsive-nav-link :href="route('admin/panel')" :active="request()->routeIs('admin/panel')">
+                        <h1 class="text-base">Dashboard</h1>
+                    </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('admin/dashboard')" :active="request()->routeIs('admin/dashboard')">
-                        <h1 class="text-base">Admin Dashboard</h1>
+                        <h1 class="text-base">Appointment List</h1>
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('chat')" :active="request()->routeIs('chat')">
                         <h1 class="text-base">Chat</h1>

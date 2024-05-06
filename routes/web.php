@@ -36,4 +36,4 @@ route::put('admin/update/{id}', [AdminController::class, 'update'])->name('admin
 
 route::get('checkstatus/delete/{id}', [UserController::class, 'destroy'])->name('checkstatus/delete')->middleware(['auth', 'verified', 'user']);
 
-Route::get('testmail', [UserController::class, 'sendAppointmentEmail'])->name('testmail');
+Route::get('admin/panel', [AdminController::class, 'panel'])->name('admin/panel')->middleware('auth', 'verified', 'admin');

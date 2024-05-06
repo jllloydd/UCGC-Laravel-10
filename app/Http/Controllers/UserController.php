@@ -54,7 +54,7 @@ class UserController extends Controller
             
         }catch(\Exception $e){
             if ($e->getCode() == 23000)
-            return redirect('dashboard')->with('failed', 'You currently have an appointment reservation ongoing! Please cancel it if you want to reschedule.');
+            return redirect('dashboard')->with('failed', 'An error has occured. Please try again.');
         }
 
 
