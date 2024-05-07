@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\User;
+use App\Charts\CounselModeAnalytics;
+use App\Charts\GenderChart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -29,7 +31,7 @@ class AdminController extends Controller
             ->with('status', 'Appointments updated successfully.');
     }
 
-    public function panel(){
+    public function panel(CounselModeAnalytics $chart, GenderChart $barchart){
 
         $userid = Auth::user()->id;
 
@@ -57,6 +59,6 @@ class AdminController extends Controller
         ->pluck('usercount')
         ->first();
 
-        return view('admin/adminpanel', compact('appointmentcount', 'activeappointments', 'pendingappointments', 'usercount', 'admininfo'));
+        return view('admin/adminpanel', compact('appointmentcount', 'activeappointments', 'pendingappointments', 'usercount', 'admininfo'), ['chart'=>$chart->build(),'barchart'=>$barchart->build()]);
     }   
 }
