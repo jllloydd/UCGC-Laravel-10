@@ -37,3 +37,5 @@ route::put('admin/update/{id}', [AdminController::class, 'update'])->name('admin
 route::get('checkstatus/delete/{id}', [UserController::class, 'destroy'])->name('checkstatus/delete')->middleware(['auth', 'verified', 'user']);
 
 Route::get('admin/panel', [AdminController::class, 'panel'])->name('admin/panel')->middleware('auth', 'verified', 'admin');
+
+route::put('admin/panel/edit/{id}', [AdminController::class, 'editappdeets'])->name('admin/panel/edit')->middleware(['auth', 'verified', 'admin']);

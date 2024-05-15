@@ -20,20 +20,30 @@ class AdminController extends Controller
     public function update(Request $request, $id){
 
         $request->validate([
-            'status' => 'required|max:255',
             'room' => 'required',
           ]);
 
+          $adminName = Auth::user()->name;
+
           $appointment = Appointment::find($id);
           $appointment->update($request->all());
+          $appointment->status = 'Active';
+          $appointment->appointed_counselor = $adminName;
+          $appointment->save();
 
           return redirect()->route('admin/dashboard')
-            ->with('status', 'Appointments updated successfully.');
+            ->with('status', 'Appointment set successfully.');
     }
 
     public function panel(CounselModeAnalytics $chart, GenderChart $barchart){
 
         $userid = Auth::user()->id;
+
+        $adminName = Auth::user()->name;
+
+        $adminNameList = DB::table('users')
+        ->where('usertype', 'admin')
+        ->get();
 
         $admininfo = DB::table('users')
             ->where('id', $userid)
@@ -59,6 +69,24 @@ class AdminController extends Controller
         ->pluck('usercount')
         ->first();
 
-        return view('admin/adminpanel', compact('appointmentcount', 'activeappointments', 'pendingappointments', 'usercount', 'admininfo'), ['chart'=>$chart->build(),'barchart'=>$barchart->build()]);
+        $upcomingappointments = DB::table('appointments')
+        ->where('appointed_counselor', $adminName)
+        ->paginate(4);
+
+        return view('admin/adminpanel', compact('appointmentcount', 'activeappointments', 'pendingappointments', 'usercount', 'admininfo', 'upcomingappointments', 'adminNameList'), ['chart'=>$chart->build(),'barchart'=>$barchart->build()]);
     }   
+
+    public function editappdeets(Request $request, $id){
+
+        $request->validate([
+            'room' => 'required',
+            'appointed_counselor' => 'required'
+          ]);
+
+        $appointment = Appointment::find($id);
+        $appointment->update($request->all());
+
+        return redirect()->route('admin/panel')->with('status', 'Appointment details edited successfully!');
+
+    }
 }

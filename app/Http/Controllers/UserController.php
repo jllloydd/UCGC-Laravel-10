@@ -21,7 +21,7 @@ class UserController extends Controller
 
         $receiver = DB::table('users')->where('usertype', 'admin')->get();
         $mailmessage = 'A new counseling appointment has been made!';
-        $subject= 'New Appointment Created';
+        $subject= 'New Appointment Created!';
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -34,7 +34,11 @@ class UserController extends Controller
 
         $data = [
             'name' => $input['name'],
-            'course' => $input['course']
+            'course' => $input['course'],
+            'mode' => $input['mode'],
+            'gender' => $input['gender'],
+            'date' => $input['date'],
+            'time' => $input['time']
         ];
 
         try{
