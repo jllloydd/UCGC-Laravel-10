@@ -51,16 +51,15 @@ class UserController extends Controller
                 'time' => $input['time'],
                 "user_id" => $userid
             ]);
-
-            Mail::to($receiver)->send(new AppointmentEmail($mailmessage, $subject, $receiver));
-
-            event(new AppointmentCreated($data));
             
         }catch(\Exception $e){
             if ($e->getCode() == 23000)
             return redirect('dashboard')->with('failed', 'An error has occured. Please try again.');
         }
 
+            Mail::to($receiver)->send(new AppointmentEmail($mailmessage, $subject, $receiver));
+
+            event(new AppointmentCreated($data));
 
             return redirect('dashboard')->with('status', 'Appointment created successfully! You may now check the status of your appointment.');
 
