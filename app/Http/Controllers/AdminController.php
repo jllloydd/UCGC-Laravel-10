@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-    public function index(){
-        $appointments = Appointment::get();
+    public function index(Appointment $appointment){
+        $appointments = $appointment->sortable('date', 'time', 'course', 'mode', 'gender')->paginate(10);
         return view('admin/dashboard', compact('appointments'));
     }   
 
@@ -69,8 +69,8 @@ class AdminController extends Controller
         ->pluck('usercount')
         ->first();
 
-        $upcomingappointments = DB::table('appointments')
-        ->where('appointed_counselor', $adminName)
+        $upcomingappointments = Appointment::where('appointed_counselor', $adminName)
+        ->sortable('date', 'time', 'course', 'mode')
         ->paginate(4);
         
         return view('admin/adminpanel', compact('appointmentcount', 'activeappointments', 'pendingappointments', 'usercount', 'admininfo', 'upcomingappointments', 'adminNameList'), ['chart'=>$chart->build(),'barchart'=>$barchart->build()]);

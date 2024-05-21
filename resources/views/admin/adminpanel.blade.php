@@ -73,15 +73,17 @@
                         <span>Your Upcoming Appointments</span>
                        </h1>
 
-                       <table class="text-dark text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400">
+                       <div class="flex flex-row justify-center items-center">
+
+                       <table class="text-dark w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400">
 
                         <thead class="text-md text-white uppercase bg-emerald-900 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th class="px-6 py-4">Name</th>
-                                <th class="px-6 py-4">Course</th>
-                                <th class="px-6 py-4">Counseling Mode</th>
-                                <th class="px-6 py-4">Appointment Date</th>
-                                <th class="px-6 py-4">Reserved Time</th>
+                                <th class="px-3 py-4">@sortablelink('course')</th>
+                                <th class="px-6 py-4">@sortablelink('mode')</th>
+                                <th class="px-6 py-4">@sortablelink('date')</th>
+                                <th class="px-6 py-4">@sortablelink('time')</th>
                                 <th class="px-6 py-4">Meeting Link / Room Name</th>
                                 <th class="px-6 py-4"></th>
                             </tr>
@@ -139,7 +141,7 @@
                                                             <select id="appointed_counselor" name="appointed_counselor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                                 
                                                                 @foreach($adminNameList as $alladmin)
-                                                                <option value="{{$alladmin->name}}" selected="{{$appinfo->appointed_counselor}}">{{$alladmin->name}}</option>   
+                                                                <option value="{{$appinfo->appointed_counselor}}">{{$alladmin->name}}</option>   
                                                                 @endforeach
                                                                 
                                                             </select>
@@ -175,7 +177,9 @@
 
                        </table>
 
-                       <div class="mt-4 bg-none">{{$upcomingappointments->links()}}</div>
+                    </div>
+
+                       <div class="mt-4 bg-none">{!! $upcomingappointments->appends(\Request::except('page'))->render() !!}</div>
 
                     </div>
                     @endif

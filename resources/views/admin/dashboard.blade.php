@@ -24,7 +24,7 @@
 
 
                 
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="p-6 flex flex-row justify-center items-center text-gray-900 dark:text-gray-100">
 
                             @if($appointments->isNotEmpty())
 
@@ -32,11 +32,11 @@
                                 <thead class="text-xs text-gray-900 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                     <tr>
                                         <th class="px-6 py-3">Name</th>
-                                        <th class="px-6 py-3">Course</th>
-                                        <th class="px-6 py-3">Counseling Mode</th>
-                                        <th class="px-6 py-3">Preferred Counselor Gender</th>
-                                        <th class="px-6 py-3">Appointment Date</th>
-                                        <th class="px-6 py-3">Reserved Time</th>
+                                        <th class="px-2 py-4">@sortablelink('course')</th>
+                                        <th class="px-3 py-4">@sortablelink('mode')</th>
+                                        <th class="px-3 py-4">@sortablelink('gender', trans('Preferred Counselor Gender'))</th>
+                                        <th class="px-3 py-4">@sortablelink('date')</th>
+                                        <th class="px-3 py-4">@sortablelink('time')</th>
                                         <th class="px-6 py-3">Meeting Link / Room Name</th>
                                         <th class="px-6 py-3"></th>
                                     </tr>
@@ -47,11 +47,11 @@
                             @if($appointment->appointed_counselor == 'To be assigned')
                             <tr id="tableValues" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$appointment->name}}</td>
-                                <td class="px-3 py-4">{{$appointment->course}}</td>
+                                <td class="px-2 py-4">{{$appointment->course}}</td>
                                 <td class="px-3 py-4">{{$appointment->mode}}</td>
-                                <td class="px-6 py-4">{{$appointment->gender}}</td>
-                                <td class="px-6 py-4">{{$appointment->date}}</td>
-                                <td class="px-6 py-4">{{$appointment->time}}</td>
+                                <td class="px-3 py-4">{{$appointment->gender}}</td>
+                                <td class="px-3 py-4">{{$appointment->date}}</td>
+                                <td class="px-3 py-4">{{$appointment->time}}</td>
 
 
                                 <form action="{{route('admin/update', $appointment->id)}}" method="post">
