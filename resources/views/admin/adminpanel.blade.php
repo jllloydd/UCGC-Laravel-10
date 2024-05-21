@@ -100,11 +100,12 @@
                                 <td class="px-6 py-4">{{$appinfo->time}}</td>
                                 <td class="px-6 py-4">{{$appinfo->room}}</td>
                                 <td class="px-4 py-2">
-                                    <button type="submit" data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+
+                                    <button type="submit" data-modal-target="crud-modal{{$appinfo->id}}" data-modal-toggle="crud-modal{{$appinfo->id}}" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                                         Edit Details
                                     </button>
 
-                                    <div id="crud-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                    <div id="crud-modal{{$appinfo->id}}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                         <div class="relative p-4 w-full max-w-md max-h-full">
                                             <!-- Modal content -->
                                             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -113,7 +114,7 @@
                                                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                         Edit Appointment Details
                                                     </h3>
-                                                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+                                                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal{{$appinfo->id}}">
                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                         </svg>
@@ -130,15 +131,17 @@
                                                         <div class="col-span-2">
                                                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Meeting Link / Room Name</label>
                                                             <input 
-                                                            type="text" name="room" id="name" value="{{$appinfo->room}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                                                            type="text" name="room" id="room" value="{{$appinfo->room}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
                                                         </div>
                             
                                                         <div class="col-span-2">
-                                                            <label for="mode" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Appointed Counselor</label>
+                                                            <label for="appointed_counselor" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Appointed Counselor</label>
                                                             <select id="appointed_counselor" name="appointed_counselor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                                
                                                                 @foreach($adminNameList as $alladmin)
-                                                                <option selected="{{$appinfo->name}}">{{$alladmin->name}}</option>
+                                                                <option value="{{$alladmin->name}}" selected="{{$appinfo->appointed_counselor}}">{{$alladmin->name}}</option>   
                                                                 @endforeach
+                                                                
                                                             </select>
                                                         </div>
 
@@ -165,10 +168,9 @@
 
                             </tr>
 
+                            @endforeach
+                            
                         </tbody>
-
-                        
-                       @endforeach
 
 
                        </table>

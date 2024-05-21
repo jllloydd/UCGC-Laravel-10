@@ -72,7 +72,7 @@ class AdminController extends Controller
         $upcomingappointments = DB::table('appointments')
         ->where('appointed_counselor', $adminName)
         ->paginate(4);
-
+        
         return view('admin/adminpanel', compact('appointmentcount', 'activeappointments', 'pendingappointments', 'usercount', 'admininfo', 'upcomingappointments', 'adminNameList'), ['chart'=>$chart->build(),'barchart'=>$barchart->build()]);
     }   
 
