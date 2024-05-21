@@ -43,6 +43,7 @@ class AdminController extends Controller
 
         $adminNameList = DB::table('users')
         ->where('usertype', 'admin')
+        ->where('id', '<>', $userid)
         ->get();
 
         $admininfo = DB::table('users')
@@ -78,13 +79,15 @@ class AdminController extends Controller
 
     public function editappdeets(Request $request, $id){
 
-        $request->validate([
+        $input = $request->validate([
             'room' => 'required',
             'appointed_counselor' => 'required'
           ]);
 
         $appointment = Appointment::find($id);
-        $appointment->update($request->all());
+        $appointment->room = $input['room'];
+        $appointment->appointed_counselor = $input['appointed_counselor'];
+        $appointment->save();
 
         return redirect()->route('admin/panel')->with('status', 'Appointment details edited successfully!');
 

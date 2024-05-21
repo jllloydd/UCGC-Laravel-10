@@ -80,8 +80,8 @@
                         <thead class="text-md text-white uppercase bg-emerald-900 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th class="px-6 py-4">Name</th>
-                                <th class="px-3 py-4">@sortablelink('course')</th>
-                                <th class="px-6 py-4">@sortablelink('mode')</th>
+                                <th class="px-1 py-4">@sortablelink('course')</th>
+                                <th class="px-2 py-4">@sortablelink('mode')</th>
                                 <th class="px-6 py-4">@sortablelink('date')</th>
                                 <th class="px-6 py-4">@sortablelink('time')</th>
                                 <th class="px-6 py-4">Meeting Link / Room Name</th>
@@ -96,15 +96,15 @@
                             <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
 
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$appinfo->name}}</td>
-                                <td class="px-3 py-4">{{$appinfo->course}}</td>
-                                <td class="px-3 py-4">{{$appinfo->mode}}</td>
+                                <td class="px-2 py-4">{{$appinfo->course}}</td>
+                                <td class="px-2 py-4">{{$appinfo->mode}}</td>
                                 <td class="px-6 py-4">{{$appinfo->date}}</td>
                                 <td class="px-6 py-4">{{$appinfo->time}}</td>
                                 <td class="px-6 py-4">{{$appinfo->room}}</td>
-                                <td class="px-4 py-2">
+                                <td class="px-6 py-2">
 
-                                    <button type="submit" data-modal-target="crud-modal{{$appinfo->id}}" data-modal-toggle="crud-modal{{$appinfo->id}}" class="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                                        Edit Details
+                                    <button type="submit" data-modal-target="crud-modal{{$appinfo->id}}" data-modal-toggle="crud-modal{{$appinfo->id}}" class="text-whitehover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                        <img src="{{asset('assets/images/edit-button.png')}}" alt="Edit Button Icon" class="h-auto max-h-8 max-w-8 w-auto">
                                     </button>
 
                                     <div id="crud-modal{{$appinfo->id}}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -139,9 +139,9 @@
                                                         <div class="col-span-2">
                                                             <label for="appointed_counselor" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Appointed Counselor</label>
                                                             <select id="appointed_counselor" name="appointed_counselor" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                                                
+                                                                <option value="{{$appinfo->appointed_counselor}}">{{$appinfo->appointed_counselor}}</option>
                                                                 @foreach($adminNameList as $alladmin)
-                                                                <option value="{{$appinfo->appointed_counselor}}">{{$alladmin->name}}</option>   
+                                                                <option value="{{$alladmin->name}}">{{$alladmin->name}}</option>   
                                                                 @endforeach
                                                                 
                                                             </select>
