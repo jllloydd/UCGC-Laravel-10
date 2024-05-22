@@ -22,8 +22,8 @@
                         <div class="bg-white text-dark p-4 m-5 shadow-lg transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-300 rounded-lg">
                             
                             <img src="{{asset('assets/images/usersicon.png')}}" alt="Users Icon" width="65" height="65" class="mb-2">
-                            <h3 class="text-base font-bold">Total Users</h3>
-                            <p class="text-3xl font-bold">{{$usercount}}</p>
+                            <h3 class="text-base font-bold">Completed Appointments</h3>
+                            <p class="text-3xl font-bold">{{$completedcount}}</p>
 
                         </div>
 
@@ -89,6 +89,7 @@
                         <tbody>
 
                             @foreach($upcomingappointments as $appinfo)
+                            @if ($appinfo->status == 'Active')
 
                             <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
 
@@ -181,7 +182,7 @@
                                 </td>
 
                             </tr>
-
+                            @endif
                             @endforeach
                             
                         </tbody>

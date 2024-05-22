@@ -66,17 +66,17 @@ class AdminController extends Controller
         ->pluck('pendingappointments')
         ->first();
 
-        $usercount = DB::table('users')
-        ->where('usertype', 'user')
-        ->selectRaw('count(id) as usercount')
-        ->pluck('usercount')
+        $completedcount = DB::table('appointments')
+        ->where('status', 'Completed')
+        ->selectRaw('count(id) as completedcount')
+        ->pluck('completedcount')
         ->first();
 
         $upcomingappointments = Appointment::where('appointed_counselor', $adminName)
         ->sortable('date', 'time', 'course', 'mode')
         ->paginate(4);
         
-        return view('admin/adminpanel', compact('appointmentcount', 'activeappointments', 'pendingappointments', 'usercount', 'admininfo', 'upcomingappointments', 'adminNameList'), ['chart'=>$chart->build(),'barchart'=>$barchart->build()]);
+        return view('admin/adminpanel', compact('appointmentcount', 'activeappointments', 'pendingappointments', 'completedcount', 'admininfo', 'upcomingappointments', 'adminNameList'), ['chart'=>$chart->build(),'barchart'=>$barchart->build()]);
     }   
 
     public function editappdeets(Request $request, $id){
