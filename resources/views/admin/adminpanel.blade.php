@@ -81,7 +81,8 @@
                                 <th class="px-6 py-4">@sortablelink('date')</th>
                                 <th class="px-6 py-4">@sortablelink('time')</th>
                                 <th class="px-6 py-4">Meeting Link / Room Name</th>
-                                <th class="px-6 py-4"></th>
+                                <th class="py-4"></th>
+                                <th class="py-4"></th>
                             </tr>
                         </thead>
 
@@ -97,7 +98,7 @@
                                 <td class="px-6 py-4">{{$appinfo->date}}</td>
                                 <td class="px-6 py-4">{{$appinfo->time}}</td>
                                 <td class="px-6 py-4">{{$appinfo->room}}</td>
-                                <td class="px-6 py-2">
+                                <td class="py-4">
 
                                     <button type="submit" data-modal-target="crud-modal{{$appinfo->id}}" data-modal-toggle="crud-modal{{$appinfo->id}}" class="text-whitehover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                                         <img src="{{asset('assets/images/edit-button.png')}}" alt="Edit Button Icon" class="h-auto max-h-8 max-w-8 w-auto">
@@ -161,6 +162,21 @@
                                             </div>
                                         </div>
                                     </div> 
+
+                                </td>
+
+                                <td class="py-4">
+
+                                    <form action="{{route('admin/panel/complete', $appinfo->id)}}" method="post">
+
+                                        <meta name="csrf-token" content="{{ csrf_token() }}">
+                                        @csrf
+                                        @method('PUT')
+
+                                        <button type="submit" onclick="return confirm('Set appointment as complete?')" class="text-whitehover:bg-green-700 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                            <img src="{{asset('assets/images/complete.png')}}" alt="Edit Button Icon" class="h-auto max-h-8 max-w-8 w-auto">
+                                        </button>
+                                    </form>
 
                                 </td>
 

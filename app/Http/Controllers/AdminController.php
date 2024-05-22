@@ -9,6 +9,8 @@ use App\Charts\CounselModeAnalytics;
 use App\Charts\GenderChart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PostCounselEmail;
 
 class AdminController extends Controller
 {
@@ -91,5 +93,24 @@ class AdminController extends Controller
 
         return redirect()->route('admin/panel')->with('status', 'Appointment details edited successfully!');
 
+    }
+
+    public function setAsComplete(Request $request, $id){
+
+
+        $appointment = Appointment::find($id);
+        $appointment->status = 'Completed';
+        $appointment->save();
+
+        $indivuserid = $appointment->user_id;
+        $user = User::find($indivuserid);
+
+        $receiver = $user->email;
+        $mailmessage = 'Your appointment has been officially completed! Please accomplish the post counseling survey for our counselors.';
+        $subject= 'Post Counseling Form';
+
+        Mail::to($receiver)->send(new PostCounselEmail($mailmessage, $subject, $receiver));
+
+        return redirect()->route('admin/panel')->with('status', 'Appointment marked as completed!');
     }
 }
