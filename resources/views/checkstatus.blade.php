@@ -17,11 +17,19 @@
                         {{-- <img src="{{asset('assets/images/pending.gif')}}" class="lg:w-1/3 lg:h-2/5 rounded-lg mb-3 sm:rounded-lg" alt="Pending Animation"> --}}
                         @elseif($info->status=='Active')
                         <p class="py-4 text-xl font-bold">Your appointment is set for <u>{{$info->date}} {{$info->time}}<u></p>
+                        @elseif($info->status=='Completed')
+                        <p class="py-4 text-xl font-bold">You have completed your appointment. Please click the link below to schedule another appointment.<u></p>
                         @endif
-                    <a onclick="return confirm('Are you sure you want to cancel your appointment?')" href="{{route('checkstatus/delete', $info->user_id)}}">
+                    <a onclick="return confirm('Are you sure you want to delete your appointment?')" href="{{route('checkstatus/delete', $info->user_id)}}">
+                        @if($info->status =='Completed')
+                        <button type="button" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                            Schedule New Appointment
+                        </button>
+                        @else
                         <button type="button" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
                             Cancel Appointment
                         </button>
+                        @endif
                     </a>
                     @endforeach
                 @else

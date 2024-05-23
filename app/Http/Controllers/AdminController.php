@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PostCounselEmail;
+use App\Mail\AppointmentSetMail;
 
 class AdminController extends Controller
 {
@@ -32,6 +33,15 @@ class AdminController extends Controller
           $appointment->status = 'Active';
           $appointment->appointed_counselor = $adminName;
           $appointment->save();
+
+          $indivuserid = $appointment->user_id;
+          $user = User::find($indivuserid);
+  
+          $receiver = $user->email;
+          $mailmessage = 'Your appointment has been set! You may now check your appointment details or cancel the appointment by clicking the link below.';
+          $subject= 'Counseling Appointment Set';
+  
+          Mail::to($receiver)->send(new AppointmentSetMail($mailmessage, $subject, $receiver));
 
           return redirect()->route('admin/dashboard')
             ->with('status', 'Appointment set successfully.');
