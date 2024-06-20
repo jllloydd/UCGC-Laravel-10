@@ -16,7 +16,7 @@
                         <h1 class="py-4">Please wait for further updates.</h1>
                         {{-- <img src="{{asset('assets/images/pending.gif')}}" class="lg:w-1/3 lg:h-2/5 rounded-lg mb-3 sm:rounded-lg" alt="Pending Animation"> --}}
                         @elseif($info->status=='Active')
-                        <p class="py-4 text-xl font-bold">Your appointment is set for the date<span class="text-4xl px-2">{{$info->date}}, {{$info->time}}</span></p>
+                        <p class="py-4 text-xl font-bold">Your appointment is set for the date<span class="text-4xl px-2">{{$info->date}}, {{ date('h:i A', strtotime($info->time)) }}</span></p>
                             @if ($info->mode=='Video Call')
                             <p class="py-4 text-xl font-bold">
                                 

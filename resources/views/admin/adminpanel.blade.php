@@ -97,7 +97,7 @@
                                 <td class="px-2 py-4">{{$appinfo->course}}</td>
                                 <td class="px-2 py-4">{{$appinfo->mode}}</td>
                                 <td class="px-6 py-4">{{$appinfo->date}}</td>
-                                <td class="px-6 py-4">{{$appinfo->time}}</td>
+                                <td class="px-6 py-4">{{ date('h:i A', strtotime($appinfo->time)) }}</td>
                                 <td class="px-6 py-4">{{$appinfo->room}}</td>
                                 <td class="py-4">
 

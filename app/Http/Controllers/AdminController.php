@@ -83,7 +83,9 @@ class AdminController extends Controller
         ->first();
 
         $upcomingappointments = Appointment::where('appointed_counselor', $adminName)
-        ->sortable('date', 'time', 'course', 'mode')
+        ->orderBy('date', 'asc')
+        ->orderBy('time', 'asc')
+        ->sortable('course', 'mode')
         ->paginate(4);
 
         if ($request->ajax()) {
