@@ -71,7 +71,12 @@
                             </tr>
                             @endforeach
                             @else
-                            <h1 class="text-3xl mb-2 font-extrabold">There are currently no appointments made. Sit back and relax!</h1>
+                            <div class="container mx-auto flex flex-col text-center items-center">
+
+                                <h1 class="text-3xl mb-2 font-extrabold">There are currently no appointments made. Sit back and relax!</h1>
+                                <img src="{{asset('assets/images/relax.gif')}}" class="rounded-lg shadow-lg my-3" alt="relax gif">
+
+                            </div>
                             @endif
                         </tbody>
                     </table>
