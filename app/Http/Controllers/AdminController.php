@@ -15,8 +15,8 @@ use App\Mail\AppointmentSetMail;
 
 class AdminController extends Controller
 {
-    public function index(Appointment $appointment){
-        $appointments = $appointment->sortable('date', 'time', 'course', 'mode', 'gender')->paginate(10);
+    public function index(Appointment $appointment, Request $request){
+        $appointments = $appointment->where('appointed_counselor', 'To be assigned')->sortable('date', 'time', 'course', 'mode', 'gender')->paginate(10);
         return view('admin/dashboard', compact('appointments'));
     }   
 
@@ -47,7 +47,7 @@ class AdminController extends Controller
             ->with('status', 'Appointment set successfully.');
     }
 
-    public function panel(CounselModeAnalytics $chart, GenderChart $barchart){
+    public function panel(CounselModeAnalytics $chart, GenderChart $barchart, Request $request){
 
         $userid = Auth::user()->id;
 
@@ -85,6 +85,15 @@ class AdminController extends Controller
         $upcomingappointments = Appointment::where('appointed_counselor', $adminName)
         ->sortable('date', 'time', 'course', 'mode')
         ->paginate(4);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'appointmentcount' => $appointmentcount,
+                'activeappointments' => $activeappointments,
+                'pendingappointments' => $pendingappointments,
+                'completedcount' => $completedcount
+            ]);
+        }
         
         return view('admin/adminpanel', compact('appointmentcount', 'activeappointments', 'pendingappointments', 'completedcount', 'admininfo', 'upcomingappointments', 'adminNameList'), ['chart'=>$chart->build(),'barchart'=>$barchart->build()]);
     }   

@@ -42,7 +42,6 @@
                                 <tbody>
 
                             @foreach ($appointments as $appointment)
-                            @if($appointment->appointed_counselor == 'To be assigned')
                             <tr id="tableValues" class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$appointment->name}}</td>
                                 <td class="px-2 py-4">{{$appointment->course}}</td>
@@ -70,18 +69,13 @@
                                 </form>
 
                             </tr>
-
-                            @endif
                             @endforeach
                             @else
                             <h1 class="text-3xl mb-2 font-extrabold">There are currently no appointments made. Sit back and relax!</h1>
                             @endif
                         </tbody>
                     </table>
-
                 </div>
-
-
             </div>
         </div>
     </div>

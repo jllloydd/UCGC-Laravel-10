@@ -16,10 +16,31 @@
                         <h1 class="py-4">Please wait for further updates.</h1>
                         {{-- <img src="{{asset('assets/images/pending.gif')}}" class="lg:w-1/3 lg:h-2/5 rounded-lg mb-3 sm:rounded-lg" alt="Pending Animation"> --}}
                         @elseif($info->status=='Active')
-                        <p class="py-4 text-xl font-bold">Your appointment is set for <u>{{$info->date}} {{$info->time}}<u></p>
+                        <p class="py-4 text-xl font-bold">Your appointment is set for the date<span class="text-4xl px-2">{{$info->date}}, {{$info->time}}</span></p>
+                            @if ($info->mode=='Video Call')
+                            <p class="py-4 text-xl font-bold">
+                                
+                                Your appointed counselor is {{$info->appointed_counselor}}. Please join the meeting on or before your set date at <a href="{{$info->room}}" target="_blank" data-tooltip-target="link-tooltip" class="hover:text-gray-600">{{$info->room}}</a>
+
+                                <div id="link-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                                    Go to meeting page
+                                    <div class="tooltip-arrow" data-popper-arrow></div>
+                                </div>
+
+                            </p>
+                            @elseif($info->mode=='Chat')
+                            <p class="py-4 text-xl font-bold">
+                                
+                            </p>
+                            @elseif($info->mode=='Face-to-Face')
+                            <p class="py-4 text-xl font-bold">
+
+                            </p>
+                            @endif
                         @elseif($info->status=='Completed')
-                        <p class="py-4 text-xl font-bold">You have completed your appointment. Please click the link below to schedule another appointment.<u></p>
+                        <p class="py-4 text-xl font-bold">You have completed your appointment. If you haven't done so, please accomplish the Counseling Evaluation Form by clicking the link <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=xOcVpfeMl0-yO5ZJFkX38J0LtyD20adMg7bAnvMjPUxURjNSMzBHMVgxV0dVVjUwM0JYNUtVM1NHVC4u"><u>here</u></a>. Click the link below to schedule another appointment.</p>
                         @endif
+
                     <a onclick="return confirm('Are you sure you want to delete your appointment?')" href="{{route('checkstatus/delete', $info->user_id)}}">
                         @if($info->status =='Completed')
                         <button type="button" class="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">

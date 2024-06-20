@@ -23,7 +23,7 @@
                             
                             <img src="{{asset('assets/images/usersicon.png')}}" alt="Users Icon" width="65" height="65" class="mb-2">
                             <h3 class="text-base font-bold">Completed Appointments</h3>
-                            <p class="text-3xl font-bold">{{$completedcount}}</p>
+                            <p class="text-3xl font-bold" id="completedcount">{{$completedcount}}</p>
 
                         </div>
 
@@ -31,7 +31,7 @@
                             
                             <img src="{{asset('assets/images/appointments.png')}}" alt="Appointments Icon" width="65" height="65" class="mb-2">
                             <h3 class="text-base font-bold">Appointments Made</h3>
-                            <p class="text-3xl font-bold">{{$appointmentcount}}</p>
+                            <p class="text-3xl font-bold" id="appointmentcount">{{$appointmentcount}}</p>
 
                         </div>
 
@@ -39,7 +39,7 @@
                             
                             <img src="{{asset('assets/images/activeappointment.png')}}" alt="Hourglass Icon" width="65" height="65" class="mb-2">
                             <h3 class="text-base font-bold">Active Appointments</h3>
-                            <p class="text-3xl font-bold">{{$activeappointments}}</p>
+                            <p class="text-3xl font-bold" id="activeappointments">{{$activeappointments}}</p>
 
                         </div>
 
@@ -47,7 +47,7 @@
                             
                             <img src="{{asset('assets/images/pending.svg')}}" alt="Pending Icon" width="65" height="65" class="mb-2">
                             <h3 class="text-base font-bold">Pending Appointments</h3>
-                            <p class="text-3xl font-bold">{{$pendingappointments}}</p>
+                            <p class="text-3xl font-bold" id="pendingappointments">{{$pendingappointments}}</p>
 
                         </div>
                         
@@ -69,9 +69,9 @@
                         <span>Your Upcoming Appointments</span>
                        </h1>
 
-                       <div class="flex flex-row justify-center items-center">
+                       <div id="dynamic-content-area" class="flex flex-row justify-center items-center">
 
-                       <table class="text-dark w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400">
+                       <table id="upcoming-appointments-table" class="text-dark w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400">
 
                         <thead class="text-md text-white uppercase bg-emerald-900 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
@@ -192,7 +192,7 @@
 
                     </div>
 
-                       <div class="mt-4 bg-none">{!! $upcomingappointments->appends(\Request::except('page'))->render() !!}</div>
+                       <div id="pagination-container" class="mt-4 bg-none">{!! $upcomingappointments->appends(\Request::except('page'))->render() !!}</div>
 
                     </div>
                     @endif
@@ -221,4 +221,25 @@
 
         </div>
     </div>
+
+    <script> //AJAX Polling script, ensures that data within the admin panel is updated relative to the database changes.
+        function fetchData() {
+            $.ajax({
+                url: "{{ route('admin/panel') }}",
+                type: "GET",
+                success: function(data) {
+                    $('#completedcount').text(data.completedcount);
+                    $('#appointmentcount').text(data.appointmentcount);
+                    $('#activeappointments').text(data.activeappointments);
+                    $('#pendingappointments').text(data.pendingappointments);
+                },
+                error: function() {
+                    console.log("Error fetching data.");
+                }
+            });
+        }
+    
+        // Poll every 10 seconds
+        setInterval(fetchData, 10000);
+    </script>
 </x-app-layout>

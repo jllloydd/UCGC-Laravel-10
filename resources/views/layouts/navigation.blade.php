@@ -29,7 +29,7 @@
                     <x-nav-link :href="route('checkstatus')" :active="request()->routeIs('checkstatus')">
                         <h1 class="text-base">Appointment Status</h1>
                     </x-nav-link>
-                    <x-nav-link :href="route('chat')" :active="request()->routeIs('chat')">
+                    <x-nav-link :href="route('chat')" target="_blank" :active="request()->routeIs('chat')">
                         <h1 class="text-base">Chat</h1>
                     </x-nav-link>
                     @elseif (Auth::user()->usertype == 'superadmin')
@@ -43,7 +43,7 @@
                     <x-nav-link :href="route('admin/dashboard')" :active="request()->routeIs('admin/dashboard')">
                         <h1 class="text-base">Appointment List</h1>
                     </x-nav-link>
-                    <x-nav-link :href="route('chat')" :active="request()->routeIs('chat')">
+                    <x-nav-link :href="route('chat')" target="_blank" :active="request()->routeIs('chat')">
                         <h1 class="text-base">Chat</h1>
                     </x-nav-link>
                     @endif
@@ -106,7 +106,7 @@
                     <x-responsive-nav-link :href="route('checkstatus')" :active="request()->routeIs('checkstatus')">
                         <h1 class="text-base">Appointment Status</h1>
                     </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('chat')" :active="request()->routeIs('chat')">
+                    <x-responsive-nav-link :href="route('chat')" target="_blank" :active="request()->routeIs('chat')">
                         <h1 class="text-base">Chat</h1>
                     </x-responsive-nav-link>
                     @elseif (Auth::user()->usertype == 'superadmin')
@@ -120,7 +120,7 @@
                     <x-responsive-nav-link :href="route('admin/dashboard')" :active="request()->routeIs('admin/dashboard')">
                         <h1 class="text-base">Appointment List</h1>
                     </x-responsive-nav-link>
-                    <x-responsive-nav-link :href="route('chat')" :active="request()->routeIs('chat')">
+                    <x-responsive-nav-link :href="route('chat')" target="_blank" :active="request()->routeIs('chat')">
                         <h1 class="text-base">Chat</h1>
                     </x-responsive-nav-link>
                     @endif
