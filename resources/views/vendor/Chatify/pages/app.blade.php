@@ -13,7 +13,13 @@
                 </nav>
             </nav>
             {{-- Search input --}}
-            <input type="text" class="messenger-search" placeholder="Search for counselor..." />
+            <input type="text" class="messenger-search" 
+            @if($usertype == 'admin')
+            placeholder="Search"
+            @else
+            placeholder="Search for counselor..."
+            @endif
+             />
             {{-- Tabs --}}
             {{-- <div class="messenger-listView-tabs">
                 <a href="#" class="active-tab" data-view="users">
