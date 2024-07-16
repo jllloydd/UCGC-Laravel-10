@@ -43,10 +43,12 @@ class MessagesController extends Controller
     public function index( $id = null)
     {
         $messenger_color = Auth::user()->messenger_color;
+        $usertype = Auth::user()->usertype;
         return view('Chatify::pages.app', [
             'id' => $id ?? 0,
             'messengerColor' => $messenger_color ? $messenger_color : Chatify::getFallbackColor(),
             'dark_mode' => Auth::user()->dark_mode < 1 ? 'light' : 'dark',
+            'usertype' => $usertype,
         ]);
     }
 
@@ -341,18 +343,31 @@ class MessagesController extends Controller
     {
         $getRecords = null;
         $input = trim(filter_var($request['input']));
-        $records = User::where('id','!=',Auth::user()->id)
-                    ->where('name', 'LIKE', "%{$input}%")
-                    ->paginate($request->per_page ?? $this->perPage);
+
+        // Get the authenticated user's usertype
+        $userType = Auth::user()->usertype;
+
+        // Adjust the query based on the usertype
+        $query = User::where('id', '!=', Auth::user()->id)
+                     ->where('name', 'LIKE', "%{$input}%");
+
+        if ($userType == 'user') {
+            $query->where('usertype', 'admin');
+        }
+
+        $records = $query->paginate($request->per_page ?? $this->perPage);
+
         foreach ($records->items() as $record) {
             $getRecords .= view('Chatify::layouts.listItem', [
                 'get' => 'search_item',
                 'user' => Chatify::getUserWithAvatar($record),
             ])->render();
         }
-        if($records->total() < 1){
+
+        if ($records->total() < 1) {
             $getRecords = '<p class="message-hint center-el"><span>Nothing to show.</span></p>';
         }
+
         // send the response
         return Response::json([
             'records' => $getRecords,

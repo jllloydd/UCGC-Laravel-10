@@ -13,7 +13,7 @@
                 </nav>
             </nav>
             {{-- Search input --}}
-            <input type="text" class="messenger-search" placeholder="Search" />
+            <input type="text" class="messenger-search" placeholder="Search for counselor..." />
             {{-- Tabs --}}
             {{-- <div class="messenger-listView-tabs">
                 <a href="#" class="active-tab" data-view="users">
@@ -27,7 +27,15 @@
            <div class="show messenger-tab users-tab app-scroll" data-view="users">
                {{-- Favorites --}}
                <div class="favorites-section">
-                <p class="messenger-title"><span>Favorites</span></p>
+                <p class="messenger-title">
+                    <span>
+                        @if($usertype == 'user')
+                            Counselors
+                        @else
+                            Admins / Starred Users
+                        @endif
+                    </span>
+                </p>
                 <div class="messenger-favorites app-scroll-hidden"></div>
                </div>
                {{-- Saved Messages --}}
