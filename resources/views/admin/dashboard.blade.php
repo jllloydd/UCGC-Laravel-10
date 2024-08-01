@@ -48,7 +48,7 @@
                                 <td class="px-3 py-4">{{$appointment->mode}}</td>
                                 <td class="px-3 py-4">{{$appointment->gender}}</td>
                                 <td class="px-3 py-4">{{$appointment->date}}</td>
-                                <td class="px-3 py-4">{{ date('h:i A', strtotime($appinfo->time)) }}</td>
+                                <td class="px-3 py-4">{{ date('h:i A', strtotime($appointment->time)) }}</td>
 
 
                                 <form action="{{route('admin/update', $appointment->id)}}" method="post">

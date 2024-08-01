@@ -30,11 +30,11 @@
                             </p>
                             @elseif($info->mode=='Chat')
                             <p class="py-4 text-xl font-bold">
-                                
+                                Your appointed counselor is {{$info->appointed_counselor}}. Please go find them in the chat room on or before your set date.
                             </p>
                             @elseif($info->mode=='Face-to-Face')
                             <p class="py-4 text-xl font-bold">
-
+                                Your appointed counselor is {{$info->appointed_counselor}}. Please go to the room S217 on or before your set date.
                             </p>
                             @endif
                         @elseif($info->status=='Completed')
