@@ -134,4 +134,13 @@ class AdminController extends Controller
 
         return redirect()->route('admin/panel')->with('status', 'Appointment marked as completed!');
     }
+
+    public function counselorList(Request $request){
+        
+        $admininfo = DB::table('users')
+            ->where('usertype', 'admin')
+            ->get();
+        
+        return view('admin/counselorlist', compact('admininfo'));
+    }
 }

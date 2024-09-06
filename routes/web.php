@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Controllers\UserController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,9 +20,27 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+ 
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
 require __DIR__.'/auth.php';
 
 route::get('admin/dashboard', [AdminController::class,'index'])->middleware(['auth', 'admin', 'verified'])->name('admin/dashboard');
+
+route::get('admin/counselorlist', [AdminController::class,'counselorlist'])->middleware(['auth', 'admin', 'verified'])->name('admin/counselorlist');
 
 route::get('superadmin/dashboard', [SuperAdminController::class,'index'])->middleware(['auth', 'superadmin', 'verified'])-> name('superadmin/dashboard');
 
