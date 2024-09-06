@@ -13,7 +13,7 @@
                 <div class="bg-emerald-900 text-white p-4 rounded-lg">
                     <h3 class="text-2xl mb-2 font-bold">Counseling Informed Consent Form</h3>
                     <p class="py-4">Please complete this form before proceeding to the next step.</p>
-                    <a href="https://forms.office.com/pages/responsepage.aspx?id=xOcVpfeMl0-yO5ZJFkX38J0LtyD20adMg7bAnvMjPUxUMUpUQUFONU5XVk5XR09MVjMzOEhGWDI1Vi4u">
+                    <a href="https://forms.office.com/pages/responsepage.aspx?id=xOcVpfeMl0-yO5ZJFkX38J0LtyD20adMg7bAnvMjPUxUMUpUQUFONU5XVk5XR09MVjMzOEhGWDI1Vi4u" target="_blank" id="consentFormLink">
                         <button type="button" class="bg-white text-black font-bold py-2 px-4 rounded-[10px] hover:bg-green-300">
                             Complete Form
                         </button>
@@ -22,35 +22,55 @@
                 <div class="bg-emerald-900 text-white p-4 rounded-lg">
                     <h3 class="text-2xl mb-2 font-bold">Counseling Intake Form</h3>
                     <p class="py-4">Please complete this form before proceeding to the next step.</p>
-                    <a href="https://forms.office.com/pages/responsepage.aspx?id=xOcVpfeMl0-yO5ZJFkX38J0LtyD20adMg7bAnvMjPUxUMEs1VE5BSEExQ1JZODAxMVAwUDlaR1U0Ry4u">
+                    <a href="https://forms.office.com/pages/responsepage.aspx?id=xOcVpfeMl0-yO5ZJFkX38J0LtyD20adMg7bAnvMjPUxUMEs1VE5BSEExQ1JZODAxMVAwUDlaR1U0Ry4u" target="_blank" id="intakeFormLink">
                         <button type="button" class="bg-white text-black font-bold py-2 px-4 rounded-[10px] hover:bg-green-300">
                             Complete Form
                         </button>
                     </a>
                 </div>
             </div>
-
+            
             <div class="text-center mt-8">
                 @if ($appointmentinfo->isNotEmpty())
-
-                <a href="{{route('checkstatus')}}">
-
-                    <button type="button" class="bg-emerald-900 text-white py-2 mb-3 px-4 rounded-[10px] font-bold text-md hover:bg-emerald-300 hover:text-black">
-                    Check Appointment
-                    </button>
-                
-                </a>
-
+                    <a href="{{route('checkstatus')}}">
+                        <button type="button" class="bg-emerald-900 text-white py-2 mb-3 px-4 rounded-[10px] font-bold text-md hover:bg-emerald-300 hover:text-black">
+                            Check Appointment
+                        </button>
+                    </a>
                 @else
-
-                <button type="button" data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="bg-emerald-900 text-white py-2 mb-3 px-4 rounded-[10px] font-bold text-md hover:bg-emerald-300 hover:text-black">
-                    Make Appointment
-                </button>
-
+                    <button type="button" id="makeAppointmentBtn" data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="bg-emerald-900 text-white py-2 mb-3 px-4 rounded-[10px] font-bold text-md hover:bg-emerald-300 hover:text-black hidden">
+                        Make Appointment
+                    </button>
                 @endif
-
             </div>
-
+            
+            {{-- Script for making sure that the forms are clicked first before make appointment button is shown. --}}
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const consentFormLink = document.getElementById('consentFormLink');
+                    const intakeFormLink = document.getElementById('intakeFormLink');
+                    const makeAppointmentBtn = document.getElementById('makeAppointmentBtn');
+                    
+                    let consentFormClicked = false;
+                    let intakeFormClicked = false;
+            
+                    function updateButtonVisibility() {
+                        if (consentFormClicked && intakeFormClicked) {
+                            makeAppointmentBtn.classList.remove('hidden');
+                        }
+                    }
+            
+                    consentFormLink.addEventListener('click', function() {
+                        consentFormClicked = true;
+                        updateButtonVisibility();
+                    });
+            
+                    intakeFormLink.addEventListener('click', function() {
+                        intakeFormClicked = true;
+                        updateButtonVisibility();
+                    });
+                });
+            </script>
             
   
   <!-- Main modal -->
