@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\User;
+use App\Models\CounselorInfo;
 use App\Charts\CounselModeAnalytics;
 use App\Charts\GenderChart;
 use Illuminate\Support\Facades\Auth;
@@ -135,12 +136,40 @@ class AdminController extends Controller
         return redirect()->route('admin/panel')->with('status', 'Appointment marked as completed!');
     }
 
-    public function counselorList(Request $request){
-        
+    public function counselorList(Request $request)
+    {
         $admininfo = DB::table('users')
-            ->where('usertype', 'admin')
+            ->leftJoin('counselorinfo', 'users.id', '=', 'counselorinfo.user_id')
+            ->where('users.usertype', 'admin')
+            ->select('users.*', 'counselorinfo.gender', 'counselorinfo.department', 'counselorinfo.expertise')
             ->get();
         
         return view('admin/counselorlist', compact('admininfo'));
+    }
+
+    public function updateCounselorProfile(Request $request)
+    {
+        $request->validate([
+            'gender' => 'required',
+            'department' => 'required',
+            'expertise' => 'required',
+        ]);
+
+        try {
+            CounselorInfo::updateOrCreate(
+                ['user_id' => Auth::id()],
+                [
+                    'name' => Auth::user()->name,
+                    'gender' => $request->gender,
+                    'department' => $request->department,
+                    'expertise' => $request->expertise,
+                ]
+            );
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            \Log::error('Error updating counselor profile: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'An error occurred. Please try again.'], 500);
+        }
     }
 }

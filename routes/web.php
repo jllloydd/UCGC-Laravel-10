@@ -20,6 +20,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::post('/admin/counselor-profile/update', [AdminController::class, 'updateCounselorProfile'])->name('admin.counselor.profile.update');
+
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');

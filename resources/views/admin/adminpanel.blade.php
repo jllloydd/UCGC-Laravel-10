@@ -11,9 +11,18 @@
 
             <div class="bg-gradient-to-b from-emerald-900 via-emerald-600 to-emerald-900 dark:bg-gray-800 overflow-hidden p-4 shadow-lg sm:rounded-lg">
 
-                @foreach($admininfo as $info)
-                <h1 class="text-3xl font-bold text-white m-5">Hi, {{$info->name}}!</h1>
-                @endforeach
+                <div class="flex justify-between items-center px-5 mb-5">
+                    @foreach($admininfo as $info)
+                    <h1 class="text-3xl font-bold text-white">Hi, {{$info->name}}!</h1>
+                    @endforeach
+
+                    <!-- Add the Complete Counselor Profile button here -->
+                    @if(!Auth::user()->counselorInfo()->exists())
+                    <button type="button" class="bg-white hover:bg-emerald-400 text-dark font-bold py-2 px-4 rounded" onclick="openCounselorProfileModal()">
+                        Complete Counselor Profile
+                    </button>
+                    @endif
+                </div>
 
                 <div class="flex-column grid grid-cols-1 gap-6">{{-- cards and tables grid --}}
                     
@@ -242,4 +251,91 @@
         // Poll every 10 seconds
         setInterval(fetchData, 10000);
     </script>
+
+<div id="counselorProfileModal" class="fixed z-10 inset-0 overflow-y-auto hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                    Complete Counselor Profile
+                </h3>
+                <div class="mt-2">
+                    <form id="counselorProfileForm">
+                        @csrf
+                        <div class="mb-4">
+                            <label for="gender" class="block text-gray-700 text-sm font-bold mb-2">Gender</label>
+                            <select id="gender" name="gender" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="department" class="block text-gray-700 text-sm font-bold mb-2">Department</label>
+                            <input type="text" id="department" name="department" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="expertise" class="block text-gray-700 text-sm font-bold mb-2">Area of Expertise</label>
+                            <input type="text" id="expertise" name="expertise" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-emerald-600 text-base font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm" onclick="submitCounselorProfile()">
+                    Save Profile
+                </button>
+                <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm" onclick="closeCounselorProfileModal()">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function submitCounselorProfile() {
+        const form = document.getElementById('counselorProfileForm');
+        const formData = new FormData(form);
+    
+        fetch('{{ route('admin.counselor.profile.update') }}', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if(data.success) {
+                alert('Profile updated successfully!');
+                closeCounselorProfileModal();
+                location.reload();
+            } else {
+                alert(data.message || 'Error updating profile. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    }
+    
+    function openCounselorProfileModal() {
+        document.getElementById('counselorProfileModal').classList.remove('hidden');
+    }
+    
+    function closeCounselorProfileModal() {
+        document.getElementById('counselorProfileModal').classList.add('hidden');
+    }
+    </script>
+
 </x-app-layout>

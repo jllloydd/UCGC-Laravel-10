@@ -18,6 +18,9 @@
                         <thead class="text-xs text-gray-900 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th class="px-6 py-3">Name</th>
+                                <th class="px-6 py-3">Gender</th>
+                                <th class="px-6 py-3">Department</th>
+                                <th class="px-6 py-3">Expertise</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -27,6 +30,9 @@
                                 <span class="inline-block w-3 h-3 rounded-full mr-2 {{ $info->active_status == 1 ? 'bg-green-500' : 'bg-red-500' }}"></span>
                                 {{$info->name}}
                             </td>
+                            <td class="px-6 py-4">{{ $info->gender ?? 'Not set' }}</td>
+                            <td class="px-6 py-4">{{ $info->department ?? 'Not set' }}</td>
+                            <td class="px-6 py-4">{{ $info->expertise ?? 'Not set' }}</td>
                         </tr>
                         @endforeach
                     @else
