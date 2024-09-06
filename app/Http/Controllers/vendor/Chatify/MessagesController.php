@@ -497,12 +497,19 @@ class MessagesController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function setActiveStatus(Request $request)
+    public function setActiveStatus()
     {
-        $activeStatus = $request['status'] > 0 ? 1 : 0;
-        $status = User::where('id', Auth::user()->id)->update(['active_status' => $activeStatus]);
+        $user = Auth::user();
+        if ($user) {
+            $activeStatus = 1; // User is logged in
+            $status = User::where('id', $user->id)->update(['active_status' => $activeStatus]);
+        } else {
+            $activeStatus = 0; // User is not logged in
+            // Note: We can't update the database here as we don't know which user to update
+        }
+    
         return Response::json([
-            'status' => $status,
+            'status' => $activeStatus,
         ], 200);
     }
 }
