@@ -46,7 +46,7 @@
                     <x-nav-link :href="route('chat')" target="_blank" :active="request()->routeIs('chat')">
                         <h1 class="text-base">Chat</h1>
                     </x-nav-link>
-                    <x-nav-link :href="route('admin/counselorlist')" target="_blank" :active="request()->routeIs('admin/counselorlist')">
+                    <x-nav-link :href="route('admin/counselorlist')" :active="request()->routeIs('admin/counselorlist')">
                         <h1 class="text-base">Counselor List</h1>
                     </x-nav-link>
                     @endif
