@@ -30,14 +30,6 @@
 
                         <div class="bg-white text-dark p-4 m-5 shadow-lg rounded-lg transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-300">
                             
-                            <img src="{{asset('assets/images/appointments.png')}}" alt="Appointments Icon" width="65" height="65" class="mb-2">
-                            <h3 class="text-base font-bold">All Appointments</h3>
-                            <p class="text-3xl font-bold" id="appointmentcount">{{$appointmentcount}}</p>
-
-                        </div>
-
-                        <div class="bg-white text-dark p-4 m-5 shadow-lg rounded-lg transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-300">
-                            
                             <img src="{{asset('assets/images/pending.svg')}}" alt="Pending Icon" width="65" height="65" class="mb-2">
                             <h3 class="text-base font-bold">Pending Appointments</h3>
                             <p class="text-3xl font-bold" id="pendingappointments">{{$pendingappointments}}</p>
@@ -57,6 +49,14 @@
                             <img src="{{asset('assets/images/usersicon.png')}}" alt="Users Icon" width="65" height="65" class="mb-2">
                             <h3 class="text-base font-bold">Completed Appointments</h3>
                             <p class="text-3xl font-bold" id="completedcount">{{$completedcount}}</p>
+
+                        </div>
+
+                        <div class="bg-white text-dark p-4 m-5 shadow-lg rounded-lg transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-300">
+                            
+                            <img src="{{asset('assets/images/appointments.png')}}" alt="Appointments Icon" width="65" height="65" class="mb-2">
+                            <h3 class="text-base font-bold">All Appointments</h3>
+                            <p class="text-3xl font-bold" id="appointmentcount">{{$appointmentcount}}</p>
 
                         </div>
                         
