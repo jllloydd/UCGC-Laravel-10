@@ -19,7 +19,8 @@ class AdminSeeder extends Seeder
             'name'=>'superadmin',
             'email'=>'superadmin@ucgc.com',
             'password'=>Hash::make('superadmin'),
-            'usertype'=>'superadmin'  
+            'usertype'=>'superadmin',
+            'email_verified_at' => now(),
         ]);
     }
 }
